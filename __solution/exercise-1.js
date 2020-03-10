@@ -17,14 +17,15 @@ function getIssPosition() {
         .then(response => {
             // Parse as JSON
             const issLocation = JSON.parse(response);
-
             // Return object with lat and lng
             return {
                 lat: issLocation.iss_position.latitude,
                 lng: issLocation.iss_position.longitude,
             }
-        });
+        })
+        // console.log the result within the .then chain
+        .then(data => console.log(data))
+        .catch(err => console.log('Error: ', err));
 }
 
-// psst.... don't forget to call the function
 getIssPosition();

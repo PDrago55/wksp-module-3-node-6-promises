@@ -8,6 +8,17 @@
 // (a number) and nothing else
 
 // Given a position (latitude and longitude), returns the position
-function getCurrentTemperatureAtPosition(position) {
 
+const request = require('request-promise');
+let key = '230c58f7258c5092bb06fa277972d162'
+let lat = 45.5017;
+let lng = -73.5673;
+function getCurrentTemperatureAtPosition() {
+    return request(`https://api.darksky.net/forecast/${key}/${lat},${lng}`)
+        .then(data => {
+            let response = JSON.parse(data)
+            console.log(response.currently.temperature);
+        })
 }
+
+getCurrentTemperatureAtPosition()

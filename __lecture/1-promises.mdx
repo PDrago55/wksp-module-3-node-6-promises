@@ -50,6 +50,7 @@ function thirdFunction() { secondFunction(); }
 thirdFunction();
 ```
 
+
 ---
 
 JavaScript only has **one** call stack.
@@ -80,12 +81,12 @@ Here is a typical request/response flow:
 7. Send the response to the client
 
 _Where is there a potential problem?_
-
+the **wait part** is the problem as we wont know how long to wait...
 ---
 
 #### The Node solution
 
-- Any I/O functions are made _asynchronous_
+- Any incoming / outgoing (I/O) functions are made _asynchronous_
 - Node uses a separate _thread_ under its control to do the I/O
 - The I/O function will **not `return` anything**
 - Instead, the I/O function will take an additional parameter, a callback.
@@ -131,7 +132,7 @@ fs.readFile("file.json", function (err, val) {
     }
 });
 ```
-
+try - catch is different to .catch
 <!-- 
 The previous code contains a mix of synchronous (`JSON.parse`) and asynchronous (`fs.readFile`) code, showing the two modes of operation:
 `JSON.parse` `return`s its value synchronously. It can cause a `SyntaxError` when parsing its input, so we have to use `try`/`catch` to handle the error
@@ -178,6 +179,7 @@ This mix of code styles has some drawbacks:
 ### `Promise` chaining:
 
 - The `.then` method of a Promise returns a **new Promise**.
+- it allows us to chain promises within our code... 
 - The new Promise returned by calling `.then` will settle in the following way, depending on the return value of the `successCallback`:
     - is not a Promise, then the new Promise will be fulfilled with the return value of the `successCallback`.
     - is a Promise, the new Promise will settle in the same way as the Promise returned from the `successCallback`
@@ -193,7 +195,7 @@ _This pattern is so common that a shortcut method called `catch` exists which on
 
 ---
 
-The callback-based code above becomes:
+The callback-based code above becomes: (same code as above but now passed as a promise)
 
 ```js
 fs.readFile("file.json")
